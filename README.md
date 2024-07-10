@@ -6,7 +6,7 @@
 
 TaskQuest is a task management web application built with Flask, SQLAlchemy, and Flask-Login.
 
-##:sparkles: Features 
+## :sparkles: Features 
 
 - User authentication (register, login, logout)
 - Role-based access control (user, admin)
