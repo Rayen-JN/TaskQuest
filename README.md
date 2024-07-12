@@ -20,7 +20,7 @@
 - Motivational quotes and news integration
 
 
-## Technologies Used
+## Technologies Used :hotsprings:
 
 - **Flask:** Web framework for building the application.
 - **SQLAlchemy:** ORM for database operations.
