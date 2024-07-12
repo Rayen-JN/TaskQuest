@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="bottom-data">
+    <div class="orders">
+        <div class="header">
+            <i class='bx bx-receipt'></i>
+            <h3>Tasks</h3><form  action="/add" method="post">
+                <div >
+                    <label class="thick">Enter the task</label>
+                    <input type="text" name="name">
+                <button class="button1" type="submit" >Add</button>
+                </div>
+            </form>
+            <br><br>
+         <table>
+             <tbody>
+            {% for todo in todo_list %}
+            <tr>
+            
+                <td class="thick">{{ todo.name }}</td>
+                {% if todo.done == False %}
+                <td><label class="label pending">Not done</label></td>
+                {% else %}
+                <td><label class="label done">Done</label></td>
+                {% endif %}
+                <td><a  href="/update/{{ todo.task_id }}" class="button2">Update</a></td>
+                <td><a  href="/delete/{{ todo.task_id }}" class="button3">Delete</a></td>
+            </tr>
+
+           
+            {% endfor %}
+            
+        </tbody>
+      
+    </table>
+    
+    </div>
+ <hr>
+{% endblock %}

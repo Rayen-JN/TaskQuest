@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Users</h1>
+<div class="bottom-data">
+    <div class="orders">
+        
+            
+<h2>Add New User</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.username.label }}<br>
+        {{ form.username(size=32) }}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+
+<br>
+<hr>
+    </div>
+</div>
+
+
+
+<div class="bottom-data">
+    <div class="orders">
+        <h2>Existing Users</h2>
+        <table>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="thick">{{ user.username }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}" style="display:inline;">
+                            <input type="submit" value="Delete" class="delete-button">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <hr>
+    </div>
+</div>
+
+        
+        
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="bottom-data">
+    <div class="orders">
+
+         
+<h1>Projects</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name(size=32) }}
+    </p>
+    <p>
+        {{ form.start_date.label }}<br>
+        {{ form.start_date() }}
+    </p>
+    <p>
+        {{ form.end_date.label }}<br>
+        {{ form.end_date() }}
+    </p>
+    <p>
+        {{ form.status.label }}<br>
+        {{ form.status() }}
+    </p>
+    <p>{{ form.submit() }}</p>
+    </form>
+   <br>
+       <hr>
+    </div>
+</div>
+
+<div class="bottom-data">
+    <div class="orders">
+        <h2>Existing Projects</h2>
+        <table>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.start_date }} to {{ project.end_date }}</td>
+                    <td>{{ project.status }}</td>
+                    <td><a href="{{ url_for('update_project', project_id=project.id) }}">Edit</a></td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_project', project_id=project.id) }}" style="display:inline;">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <hr>
+    </div>
+</div>
+
+
+{% endblock %}

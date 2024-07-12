@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='planning.png') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <title>{{pagetitle}}</title>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <i class='bx bx-customize'></i>
+            <div class="logo-name"><span>Task</span>Quest</div>
+        </a>
+        <ul class="side-menu">
+            <li><a href="{{url_for('dashboard')}}"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li><a href="{{url_for('projects')}}"><i class='bx bx-folder-plus'></i>Projects</a></li>
+            <li><a href="{{url_for('tasks')}}"><i class='bx bx-receipt'></i>Tasks</a></li>
+            <i class="fa-solid fa-quote-right"></i>
+
+            <li><a href="{{url_for('quote')}}"><i class='bx bxs-quote-alt-right'></i>Quotes</a></li>
+
+            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+            <li><a href="{{ url_for('users') }}"><i class='bx bx-group'></i>Users</a></li>
+        {% endif %}
+
+
+
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav class="nav">
+
+            <a href="{{ url_for('news') }}">News</a>
+
+
+            {% if current_user.is_authenticated %}
+            <ul class="nav">
+                <li class="nav-item role-info"> {{ current_user.role.capitalize() }}</li>
+            </ul>
+        {% endif %}
+
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="{{url_for('logout')}}" class="logout">
+                        <i class='bx bx-log-out-circle'></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+
+            <!-- other links -->
+   
+        </nav>
+
+
+        <!-- End of Navbar -->
+
+        <main>
+            <div class="header">
+                <div class="left">
+                   
+                    
+                </div>
+            </div>
+               
+          {% block body %}
+          {% endblock %}
+
+                <!-- End of Reminders-->
+
+            
+
+        </main>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

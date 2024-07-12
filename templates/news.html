@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<h1>Technology and Programming News :</h1>
+<br>
+<ul>
+    {% for article in articles %}
+        <li>
+            <h2>{{ article.title }}</h2>
+            <p>{{ article.description }}</p>
+            <a href="{{ article.url }}" target="_blank">Read more</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="bottom-data">
+    <div class="orders">
+        <div class="header">
+            <h3>Tasks :</h3>
+            <form action="/add" method="post">
+                <!-- Add your form elements here -->
+            </form>
+            <br><br>
+            <table>
+                <tbody>
+                    {% for todo in todo_list %}
+                    <tr>
+                        <td class="thick">{{ todo.name }}</td>
+                        {% if todo.done == False %}
+                        <td><label class="label pending">Not done</label></td>
+                        {% else %}
+                        <td><label class="label done">Done</label></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    
+    <div class="bottom-data">
+        <div class="orders">
+            <div class="header">
+                <h3>Projects :</h3>
+                <table>
+                    <tbody>
+                        {% for project in projects %}
+                        <tr>
+                            <td class="thick">{{ project.name }}</td>
+                            <td>{{ project.start_date }} to {{ project.end_date }}</td>
+                            <td>
+                                {% if project.status == 'done' %}
+                                <label class="label done">Done</label>
+                                {% else %}
+                                <label class="label pending">Not done</label>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
