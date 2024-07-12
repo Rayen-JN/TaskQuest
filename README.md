@@ -18,3 +18,13 @@
 - CRUD operations for tasks and projects
 - User management (admin-only)
 - Motivational quotes and news integration
+
+
+## Technologies Used
+
+- **Flask:** Web framework for building the application.
+- **SQLAlchemy:** ORM for database operations.
+- **Flask-WTF:** Integration of WTForms with Flask.
+- **Flask-Login:** User session management.
+- **Flask-Bcrypt:** Password hashing.
+- **HTML, CSS, JavaScript:** Frontend technologies.
