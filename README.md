@@ -3,6 +3,7 @@
 <h1>TaskQuest </h1>
 </div>
 
+![image](Screenshot 2024-07-10 214911](https://github.com/user-attachments/assets/cac9497d-7f64-42c6-8b4c-32f7b9484350)
 
 TaskQuest is a task management web application built with Flask, SQLAlchemy, and Flask-Login.
 
