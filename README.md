@@ -3,7 +3,8 @@
 <h1>TaskQuest </h1>
 </div>
 
-![Screenshot 2024-07-10 214911](https://github.com/user-attachments/assets/cac9497d-7f64-42c6-8b4c-32f7b9484350)
+![Screenshot 2024-07-12 163140](https://github.com/user-attachments/assets/2d020eb9-e17c-47e1-84f4-b562465b9a39)
+
 <div align="center">
 <p>TaskQuest is a task management web application built with Flask, SQLAlchemy, and Flask-Login.</p>
 </div>
