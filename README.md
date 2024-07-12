@@ -7,6 +7,8 @@
 <div align="center">
 <p>TaskQuest is a task management web application built with Flask, SQLAlchemy, and Flask-Login.</p>
 </div>
+
+
 ## :sparkles: Features 
 
 - User authentication (register, login, logout)
