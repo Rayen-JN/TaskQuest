@@ -232,18 +232,15 @@ def delete_user(user_id):
         db.session.commit()
     return redirect(url_for('users'))
 
+
 @app.route('/add', methods=['POST'])
 @login_required
 def add():
     name = request.form.get("name")
-    user_id = request.form.get("user_id", current_user.id)
-
-    new_task = Todo(name=name, done=False, user_id=user_id)
+    new_task = Todo(name=name, done=False, user_id=current_user.id)
     db.session.add(new_task)
     db.session.commit()
-
     return redirect(url_for("tasks"))
-
 
 @app.route('/update/<int:todo_id>')
 @login_required
