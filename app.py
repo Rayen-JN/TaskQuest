@@ -43,7 +43,8 @@ class Todo(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     done = db.Column(db.Boolean)
-
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref='todos')
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -54,6 +55,10 @@ class Project(db.Model):
 
 # ---------------------------------------------------------------------------------------------------------------------
 # forms
+class TaskForm(FlaskForm):
+    name = StringField('Task Name', validators=[InputRequired()])
+    user_id = SelectField('Assign to User', coerce=int)
+    submit = SubmitField('Add Task')
 
 
 class RegisterForm(FlaskForm):
@@ -130,9 +135,14 @@ def login():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    todo_list = Todo.query.all()
+    if current_user.role == 'admin':
+        todo_list = Todo.query.all()
+    else:
+        todo_list = Todo.query.filter_by(user_id=current_user.id).all()
+    
     projects = Project.query.all()
     return render_template('dashboard.html', pagetitle="Home | TaskQuest", todo_list=todo_list, projects=projects)
+
 
 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -164,8 +174,27 @@ def projects():
 @app.route('/tasks', methods=['GET', 'POST'])
 @login_required
 def tasks():
-    todo_list = Todo.query.all()
-    return render_template("Tasks.html", todo_list=todo_list, pagetitle="Tasks | TaskQuest")
+    if current_user.role == 'admin':
+        todo_list = Todo.query.all()
+        users = User.query.all()
+    else:
+        todo_list = Todo.query.filter_by(user_id=current_user.id).all()
+        users = None
+
+    if request.method == 'POST':
+        name = request.form['name']
+        if current_user.role == 'admin':
+            user_id = request.form['user_id']
+        else:
+            user_id = current_user.id
+
+        new_task = Todo(name=name, done=False, user_id=user_id)
+        db.session.add(new_task)
+        db.session.commit()
+        return redirect(url_for('tasks'))
+
+    return render_template("Tasks.html", todo_list=todo_list, users=users, pagetitle="Tasks | TaskQuest")
+
 
 
 def admin_required(func):
@@ -203,30 +232,37 @@ def delete_user(user_id):
         db.session.commit()
     return redirect(url_for('users'))
 
-
 @app.route('/add', methods=['POST'])
+@login_required
 def add():
     name = request.form.get("name")
-    new_task = Todo(name=name, done=False)
+    user_id = request.form.get("user_id", current_user.id)
+
+    new_task = Todo(name=name, done=False, user_id=user_id)
     db.session.add(new_task)
     db.session.commit()
+
     return redirect(url_for("tasks"))
 
 
 @app.route('/update/<int:todo_id>')
+@login_required
 def update(todo_id):
     todo = Todo.query.get(todo_id)
-    todo.done = not todo.done
-    db.session.commit()
+    if todo and (current_user.role == 'admin' or todo.user_id == current_user.id):
+        todo.done = not todo.done
+        db.session.commit()
     return redirect(url_for("tasks"))
-
 
 @app.route('/delete/<int:todo_id>')
+@login_required
 def delete(todo_id):
     todo = Todo.query.get(todo_id)
-    db.session.delete(todo)
-    db.session.commit()
+    if todo and (current_user.role == 'admin' or todo.user_id == current_user.id):
+        db.session.delete(todo)
+        db.session.commit()
     return redirect(url_for("tasks"))
+
 
 
 def get_motivational_quote():
@@ -300,6 +336,17 @@ def news():
         articles = []
 
     return render_template('news.html', articles=articles, pagetitle="News | TaskQuest")
+
+@app.route('/update_task/<int:todo_id>', methods=['POST'])
+@login_required
+@admin_required
+def update_task(todo_id):
+    task = Todo.query.get(todo_id)
+    if task:
+        task.name = request.form['name']
+        task.user_id = request.form['user_id']
+        db.session.commit()
+    return redirect(url_for('tasks'))
 # ---------------------------------------------------------------------------------------------------------------------
 
 
