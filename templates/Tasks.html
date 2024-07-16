@@ -4,36 +4,56 @@
     <div class="orders">
         <div class="header">
             <i class='bx bx-receipt'></i>
-            <h3>Tasks</h3><form  action="/add" method="post">
-                <div >
+            <h3>Tasks</h3>
+            <form action="{{ url_for('add') }}" method="post">
+                <div>
                     <label class="thick">Enter the task</label>
-                    <input type="text" name="name">
-                <button class="button1" type="submit" >Add</button>
+                    <input type="text" name="name" required>
+                    {% if current_user.role == 'admin' %}
+                    <label class="thick">Assign to user</label>
+                    <select name="user_id">
+                        {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                    {% else %}
+                    <input type="hidden" name="user_id" value="{{ current_user.id }}">
+                    {% endif %}
+                    <button class="button1" type="submit">Add</button>
                 </div>
             </form>
             <br><br>
-         <table>
-             <tbody>
-            {% for todo in todo_list %}
-            <tr>
-            
-                <td class="thick">{{ todo.name }}</td>
-                {% if todo.done == False %}
-                <td><label class="label pending">Not done</label></td>
-                {% else %}
-                <td><label class="label done">Done</label></td>
-                {% endif %}
-                <td><a  href="/update/{{ todo.task_id }}" class="button2">Update</a></td>
-                <td><a  href="/delete/{{ todo.task_id }}" class="button3">Delete</a></td>
-            </tr>
-
-           
-            {% endfor %}
-            
-        </tbody>
-      
-    </table>
-    
+            <table>
+                <tbody>
+                    {% for todo in todo_list %}
+                    <tr>
+                        <td class="thick">{{ todo.name }}</td>
+                        {% if todo.done == False %}
+                        <td><label class="label pending">Not done</label></td>
+                        {% else %}
+                        <td><label class="label done">Done</label></td>
+                        {% endif %}
+                        <td><a href="{{ url_for('update', todo_id=todo.task_id) }}" class="button2">Update</a></td>
+                        <td><a href="{{ url_for('delete', todo_id=todo.task_id) }}" class="button3">Delete</a></td>
+                        {% if current_user.role == 'admin' %}
+                        <td>
+                            <form action="{{ url_for('update_task', todo_id=todo.task_id) }}" method="post">
+                                <input type="text" name="name" value="{{ todo.name }}">
+                                <select name="user_id">
+                                    {% for user in users %}
+                                    <option value="{{ user.id }}" {% if user.id == todo.user_id %}selected{% endif %}>{{ user.username }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="button2">Save</button>
+                            </form>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
- <hr>
+</div>
+<hr>
 {% endblock %}
