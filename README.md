@@ -8,15 +8,12 @@
 <p>TaskQuest is a task management web application built with Flask, SQLAlchemy, and Flask-Login.</p>
 </div>
 
-## Project Name
 
-**TaskQuest**
-
-## Introduction
+## :blue_book: Introduction
 
 TaskQuest is a comprehensive task management application designed to help users manage their tasks and projects effectively. With features like user authentication, role-based access control, and integration of motivational quotes and news, TaskQuest aims to streamline task management and provide a motivational boost.
 
-## Installation
+## :open_file_folder: Installation
 
 To set up TaskQuest locally, follow these steps:
 
@@ -69,7 +66,7 @@ bash
 
     flask run
 
-Usage
+# :flashlight: Usage
 
 Once the application is running, you can access it via http://127.0.0.1:5000. Use the login page to access your dashboard and manage tasks and projects. You can also register as a new user if you don’t have an account yet.
 Contributing
@@ -83,7 +80,7 @@ Contributions are welcome! If you would like to contribute to TaskQuest, please 
     Push to the branch (git push origin feature/YourFeature).
     Create a new Pull Request.
 
-Related Projects
+# :bulb: Related Projects
 
     Flask: The web framework used for building TaskQuest.
     SQLAlchemy: The ORM for database operations.
@@ -91,10 +88,10 @@ Related Projects
     Flask-Login: User session management.
     Flask-Bcrypt: Password hashing.
 
-Licensing
+# :page_with_curl: Licensing
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-:sparkles: Features
+# :sparkles: Features
 
     User authentication (register, login, logout)
     Role-based access control (user, admin)
@@ -111,8 +108,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
     Flask-Login: User session management.
     Flask-Bcrypt: Password hashing.
     HTML, CSS, JavaScript: Frontend technologies.
-
-python
 
 
 Feel free to customize any sections as needed!
